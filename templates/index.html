@@ -17,7 +17,7 @@
         <div class="jumbotron text-center">
             <h1>Mission to Mars</h1>
             <!-- Add a button to activate scraping script -->
-            <p><a class="btn btn-primary btn-lg" href="/scrape"
+            <p><a class="btn btn-success btn-lg btn-block" href="/scrape"
                         role="button">Scrape New Data</a> <!--There are three classes here because we're telling Bootstrap that we're using a button (btn), it's the primary color (btn-primary), and it's large (btn-lg). The href is linking to another component or "route" in flask. <a /> are used to link to other things. -->
             </p> 
         </div>
@@ -26,9 +26,9 @@
             <div class = "col-md-12">
                 <div class = "media">
                     <div class = "media-bottom">
-                        <h2>Latest Mars News</h2>
+                        <h2><strong> Mars News</strong></h2>
                         <h4 class="media-heading">{{mars.news_title}}</h4> <!-- this follows the syntax of document.variable_name:In our scraping code, we saved the title of the article we scraped to the "news_title" variable and stored that in the mars Mongo document. When Flask encounters these curly brackets, it then looks to the string (in this case, a variable) stored within them and replaces the variable with the data it holds.-->
-                        <p>{{ mars.news_paragraph }}</p>
+                        <p class="bg-info">{{ mars.news_paragraph }}</p>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
               <!-- Section for Featured Image and Facts table -->
             <div class="row" id="mars-featured-image">
                 <div class="col-md-8">
-                    <h2>Featured Mars Image</h2>
+                    <h2><strong>Mars Image</strong></h2>
                         <img
                             src="{{mars.featured_image}}"
                             class="img-responsive" 
@@ -46,10 +46,27 @@
                 <div class="col-md-4">
                   <!-- Mars Facts -->
                     <div class="row" id="mars-facts"> <!-- why "row" again?-->
-                        <h4>Mars Facts</h4>
-                        {{ mars.facts | safe }} <!-- safe tells te browser that the table doesn't contain anything malicious-->
+                        <h3><strong>Mars Facts</strong></h3>
+                        {{ mars.facts | safe }} <!-- safe tells the browser that the table doesn't contain anything malicious-->
                     </div>
                 </div>
+            </div>
+            <!-- Hemisphere Images and Titles -->
+            <div class = "row" id = "hemisphere-images">
+                <div class="col-md-12">
+                    <h2><strong>Hemispheres</strong></h2>
+                    <dl>
+                        {% for hemisphere in mars.hemispheres %}
+                        <img
+                            src = "{{hemisphere.img_url}}"
+                            class = "img-responsive"
+                            alt = "Responsive image"
+                        />
+                        <h2 class="media-heading"><strong>{{hemisphere.title}}</strong></h2>
+                        {% endfor %}
+                    </dl>
+                </div>
+
             </div>
     </div>
 </body>
